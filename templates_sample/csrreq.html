@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html ng-app="csrRequestApp">
+
+<head>
+
+{% load staticfiles %}
+{% load account %}
+{% load i18n %}
+
+ <div class="" style="
+    padding: 20px 250px 20px 400px;
+    border-bottom: 1px solid #eee;
+    color: #ff;
+    background-color: rgb(199, 235, 249);
+">
+<p class="col-md-3"> You are logged in as </p>  {% for account in user.socialaccount_set.all %}<b> User: {{ user.email }}</b>
+ {% endfor %}
+</div>
+<b><p> All the fields (*) are mandatory</p></b>
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="{% static "css/csr-form.css" %}" />
+
+  <!-- JS Files -->
+  <script data-require="angular.js@1.5.6" data-semver="1.5.6" src="https://code.angularjs.org/1.5.6/angular.js"></script>
+<!--  <script src=/static/css/script.js></script> -->
+    <script src={% static "js/csr-script.js" %}></script>
+
+
+</head>
+
+<body>
+  <div ng-controller="csrRequestFormController">
+    <div class="col-sm-8 col-sm-offset-2 p-tb-20">
+      <form name = csrForm>{% csrf_token %}
+
+        <div class="row m-t-15">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="cname"> Common Name:* </label>
+            <div class="form-group">
+<!--	           <input id=cname" type="text" placeholder="Enter Domain Name" class="form-control" ng-model="csrForm.cname" ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/" title="Enter valid domain name" required> -->
+		<input type="text" id="cname" ng-model="csrForm.cname" name="cname_field" placeholder="Enter Domain Name" class="form-control" ng-pattern="/^(\*\.)?[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/" title="Enter valid domain name" required>
+		   <span style="color:red" ng-show="csrForm.cname_field.$error.pattern">Not a valid domain!</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="org"> Organization:* </label>
+            <div class="form-group">
+              <input id="org" type="text" placeholder="Oraganization"  class="form-control" ng-model="csrForm.org" required>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="department"> Department:* </label>
+            <div class="form-group">
+              <input id="department" type="text" placeholder="Department" class="form-control" ng-model="csrForm.department" required>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="city"> City:* </label>
+            <div class="form-group">
+              <input id="city" type="text" placeholder="Enter City" class="form-control" ng-model="csrForm.city" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="stateProvince"> State / Province:* </label>
+            <div class="form-group">
+              <input id="stateProvince" type="text" placeholder="State / Province" class="form-control" ng-model="csrForm.stateProvince" required>
+            </div>
+          </div>
+	
+          <div class="col-lg-3 col-md-3 col-sm-12">
+            <label for="country"> Country:* </label>
+            <div class="form-group">
+	  <select class="form-control" id="country" name="country" ng-model="csrForm.country" required>
+	    <option value="US">United States of America</option> 
+	    <option value="IN">India</option>
+	    <option value="GB">Great Britain</option>
+	    <option value="AT">Australia</option>
+	    <option value="CA">Canada</option>
+	  </select>
+          </div>
+	
+        </div>
+	</div>
+	
+        <div class="row">
+ 	  <div class="col-lg-4 col-md-4 col-sm-16">
+             <label for=keySize"> Key Size:* </label>
+               <div class="form-group">
+	  <select class="form-control" id="keySize" name="keySize" ng-model="csrForm.keySize" required>
+	    <option value="2048">RSA 2048 Recommended</option>
+	   <option value="4096">RSA 4096</option>
+	  </select>
+                
+	       </div>
+  	  </div>
+         <div class="col-lg-3 col-md-3 col-sm-12">
+             <label for=emailId">Email Id:* </label>
+               <div class="form-group">
+                <input id="emailId" type="email" placeholder="admin@example.com" class="form-control" ng-model="csrForm.emailId" ng-pattern="/[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" title="Enter valid email address" required>
+               </div>
+          </div>
+
+	</div>
+
+      <div class="row">
+        <div class="col-sm-2 pull-left">
+          <button type="submit" class="btn btn-primary btn-block" ng-click="submitCSRForm()"> Submit </button>
+        </div>
+      </div>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="{% static "css/csr-table.css" %}" type="text/css"/>
+<br></br><br></br>
+<div class="divTable" style="width: 70%;border: 4px solid #000;" >
+<div class="divTableBody">
+<div class="divTableRow">
+<div class="divTableCell" style="width: 25%">Common Name&nbsp;</div>
+<div class="divTableCell">"The fully qualified domain name that clients will use to reach your server.
+
+To secure https://www.example.com, your common name must be www.example.com or *.example.com for a wildcard certificate.
+
+Less commonly, you may also enter the public IP address of your server."&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">Organization&nbsp;</div>
+<div class="divTableCell">"The exact legal name of your organization. Example: "Example, Inc."
+Less commonly, if you do not have a legal registered organization name, you should enter your own full name here."&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">Department&nbsp;</div>
+<div class="divTableCell">"Many people leave this field blank. This is the department within your organization which you want to appear in the certificate. It will be listed in the certificate's subject as Organizational Unit, or "ou." <br>Common examples:</br><br>Web Administration</br></br>Web Security</br><br>Marketing</br>"&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">City&nbsp;</div>
+<div class="divTableCell">"The city where your organization is legally located".&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">State / Province&nbsp;</div>
+<div class="divTableCell">"The state or province where your organization is legally located".&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">Country&nbsp;</div>
+<div class="divTableCell">"Please enter country code for your country. <br>Please refer:</br><a href="https://www.digicert.com/ssl-certificate-country-codes.htm" target="_blank">https://www.digicert.com/ssl-certificate-country-codes.htm</a> " &nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">Key Size&nbsp;</div>
+<div class="divTableCell">"RSA Key sizes smaller than 2048 are considered insecure."&nbsp;</div>
+</div>
+<div class="divTableRow">
+<div class="divTableCell">Email Address&nbsp;</div>
+<div class="divTableCell">"An email address used to contact your organization."&nbsp;</div>
+</div>
+</div>
+</div>
+
+
+      </form>
+
+    </div>
+  </div>
+</body>
+
+
+</html>

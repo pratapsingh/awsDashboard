@@ -1,0 +1,72 @@
+{% load staticfiles %}
+{% load account %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Upload client Certificate</title>
+    </head>
+
+    <body>
+	<div id="body">
+	   <div class="" style="padding: 20px 250px 20px 400px; border-bottom: 1px solid #eee; color: #ff;   background-color: rgb(199, 235, 249);">
+	   <table style="width: 100%;">
+	   <tr><td>
+	   <b>You have successfully verified your account</b> </td>
+	   <td class="alignRight">
+	     {% for account in user.socialaccount_set.all %}
+	     <p><b>User:</b> {{ user.email }}</p>
+	     {% endfor %}
+	   </td></tr>
+	   </table>
+	</div>
+
+
+        <!-- Upload form. Note enctype attribute! -->
+
+        <form action="{% url "list" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+	     
+<!--	    <p>{{ form.domain.label_tag }} {{ form.domain.help_text }}  -->
+<!--	    <input type="text" placeholder="http://example.com/"></p>  -->
+        <th><label for="id_domain">Enter Domain Name or URL:</label> </th>
+        <th>{{ form.domain }}<maxlength="100"></th>
+
+            <p>
+                {{ form.domain.errors }}
+
+            </p>
+
+
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+            <p>
+		{{ form.docfile.validators }}
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+
+            </p>
+
+            <p><input type="submit" value="Upload" accept=".zip, .tar.gz, .gz, .tar"/></p>
+
+        </form>
+
+
+        <!-- List of uploaded documents -->
+        {% if documents %}
+            <ul>
+                {% for document in documents %}
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents.</p>
+        {% endif %}
+
+
+    </body>
+
+</html>
+

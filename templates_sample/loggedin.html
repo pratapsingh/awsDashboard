@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% load account %}
+{% load i18n %}
+<html>
+<body>
+<div id="body">
+<link href={% static 'css/loggedin.css' %} rel="stylesheet" type="text/css">
+
+<!--
+<table style="width: 100%;">
+<tr><td>
+<b>You have successfully verified your account</b> </td>
+<td class="alignRight">
+{% for account in user.socialaccount_set.all %}
+<p><b>User:</b> {{ user.email }}</p>
+{% endfor %}
+</td></tr>
+</table>
+-->
+ <div class="" style="
+    padding: 20px 250px 20px 400px;
+    border-bottom: 1px solid #eee;
+    color: #ff;
+    background-color: rgb(199, 235, 249);
+">
+<table style="width: 100%;">
+<tr><td>
+<b>You have successfully verified your account</b> </td>
+<td class="alignRight">
+{% for account in user.socialaccount_set.all %}
+<p><b>User:</b> {{ user.email }}</p>
+{% endfor %}
+</td></tr>
+</table>
+</div>
+
+<div id="buttons">
+  <a href="http://devops.example.com/csr-request/" class="btn blue">CSR Request</a>
+  <a href="http://devops.example.com/upload-certificate/" class="btn green">Upload Certificate</a>
+</div>
+
+<div id="buttons">
+  <a target="_blank" href="http://ci.example.com/" class="btn orange">Jenkins</a>
+  <a target="_blank" href="https://monitoring.example.com" class="btn purple">Nagios</a>
+</div>
+
+<div id="buttons">
+  <a href="http://devops.example.com/prodinstances/" class="btn green">prodinstances</a>
+  <a href="http://devops.example.com/profile1/" class="btn red">profile1</a>
+  <a href="http://devops.example.com/profile2/" class="btn yellow">profile2</a>
+</div>
+
+</body>
+</html>

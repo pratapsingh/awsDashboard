@@ -1,0 +1,55 @@
+{% load staticfiles %}
+{% load account %}
+
+<html>
+<head>
+<link href="{% static 'css/GetInstance.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div>
+<form action= '{% url 'prodinstances' %}' method="POST"/ >{% csrf_token %}
+ <b>Refresh List:</b> <input type="submit" value="Update" id="toggle1" />
+  </form>
+</div>
+
+
+<div class="Table">
+    <div class="Title">
+        <p>AWS Instance List</p>
+    </div>
+    <div class="Heading">
+        <div class="Cell">
+            <p>Number</p>
+        </div>
+        <div class="Cell">
+            <p>Instance ID</p>
+        </div>
+        <div class="Cell">
+            <p>IP Address</p>
+        </div>
+        <div class="Cell">
+            <p>Private IP Address</p>
+        </div>
+        <div class="Cell">
+            <p>Instance Type</p>
+        </div>
+        <div class="Cell">
+            <p>State</p>
+        </div>
+        <div class="Cell">
+            <p>VPC ID</p>
+        </div>
+        <div class="Cell">
+            <p>Key Pair</p>
+        </div>
+        <div class="Cell">
+            <p>DNS Name</p>
+        </div>
+        <div class="Cell">
+            <p>Region</p>
+        </div>
+        <div class="Cell">
+            <p>Tags</p>
+        </div>
+</div>
